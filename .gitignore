@@ -1,0 +1,15 @@
+#--- Ignore windows files
+*.dropbox
+desktop.ini
+
+#--- Ignore output files
+buildoutput.txt
+*.bin
+
+#--- Ignore VIM files
+*~
+*.sw*
+
+#--- Ignore user files
+user*
+
