@@ -15,18 +15,29 @@
 
 </head>
 <body>
-    <div id="chartdiv" width="500px" height="300px"></div>
+    <div id="chartdiv" width="300px" height="200px"></div>
 
     <script>
         // Create a new SmokeChart object, and initialize
         var chart = new SmokeChart();
         chart.Parent = document.getElementById("chartdiv");
         chart.Bounds = new SmokeChartBounds(1, 12, 0, 11000);
-        chart.Width = 1000;
-        chart.Height = 700;
+        chart.Width = 700;
+        chart.Height = 500;
         chart.YInterval = 1000;
+        chart.PlotAverageEnabled = false;
         chart.XLabels = new Array("JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEPT", "OCT", "NOV", "DEC");
         chart.YLegendUnit = " km";
+
+        var chart2 = new SmokeChart();
+        chart2.Parent = document.getElementById("chartdiv");
+        chart2.Bounds = new SmokeChartBounds(1, 12, 0, 50);
+        chart2.Width = 700;
+        chart2.Height = 500;
+        chart2.YInterval = 5;
+        chart2.PlotAverageEnabled = true;
+        chart2.XLabels = new Array("JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEPT", "OCT", "NOV", "DEC");
+        chart2.YLegendUnit = " mi/gal";
 
         // Load up the data to plot
         $.ajax({
@@ -34,8 +45,20 @@
             async: true,
             success: function(csvd) {
                 var data = $.csv.toArrays(csvd);
-                chart.Data = data;
+                chart.LoadData(data);
                 chart.Draw();
+            },
+            dataType: "text"
+        });
+
+        // Load up the data to plot
+        $.ajax({
+            url: "milespergallon.csv",
+            async: true,
+            success: function (csvd) {
+                var data = $.csv.toArrays(csvd);
+                chart2.LoadData(data);
+                chart2.Draw();
             },
             dataType: "text"
         });
