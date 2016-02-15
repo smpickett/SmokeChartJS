@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Smoke Plotter Demo</title>
+    <link rel='stylesheet' type='text/css' href='style.css'/>
+
+    <script type='text/javascript' src='..\lib\smokeplotter.js'></script>
+
+    <!--CSV Stuff-->
+    <link href="http://code.jquery.com/ui/1.9.0/themes/cupertino/jquery-ui.css" rel="stylesheet"/>
+    <script src="http://code.jquery.com/jquery-1.8.2.js"></script>
+    <script src="http://code.jquery.com/ui/1.9.0/jquery-ui.js"></script>
+    <script src="http://jquery-csv.googlecode.com/git/src/jquery.csv.js"></script>
+    <!--CSV Stuff-->
+
+</head>
+<body>
+    <div id="chartdiv" width="500px" height="300px"></div>
+
+    <script>
+        // Create a new SmokeChart object, and initialize
+        var chart = new SmokeChart();
+        chart.Parent = document.getElementById("chartdiv");
+        chart.Bounds = new SmokeChartBounds(1, 12, 0, 11000);
+        chart.Width = 1000;
+        chart.Height = 700;
+        chart.YInterval = 1000;
+        chart.XLabels = new Array("JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEPT", "OCT", "NOV", "DEC");
+        chart.YLegendUnit = " km";
+
+        // Load up the data to plot
+        $.ajax({
+            url: "result.csv",
+            async: true,
+            success: function(csvd) {
+                var data = $.csv.toArrays(csvd);
+                chart.Data = data;
+                chart.Draw();
+            },
+            dataType: "text"
+        });
+    </script>
+
+</body>
+</html>
